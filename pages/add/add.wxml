@@ -1,0 +1,40 @@
+<view class='container' style="{{showModalStatus?'height: 100%;overflow:hidden':''}}">
+  <view class='items'>
+    <view class='item' wx:for="{{itemList}}" wx:key="item">
+      <view class='item-image' bindtap='showModal' data-index='{{index}}'>
+        <image mode='aspectFill' class='icon-image' src='{{item.imagePath}}'></image>
+        <view class='item-text'>{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!--屏幕背景变暗的背景  -->
+<view class="commodity_screen" bindtap="hideModal" catchtouchmove="move" wx:if="{{showModalStatus}}"></view>
+<!--弹出框  -->
+<view animation="{{animationData}}" catchtouchmove="move" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+  <view class='item-image'>
+    <image mode='aspectFill' class='icon-image' src='{{itemList[selectedIndex].imagePath}}'></image>
+    <view class='item-text'>{{itemList[selectedIndex].name}}</view>
+  </view>
+  <view class="page-section">
+    <view class="page-section-title">金额</view>
+    <view class="textarea-wrp">
+      <input type='digit' bindinput='amountInput' style='height:35px'/>
+    </view>
+  </view>
+  <view class="page-section">
+    <view class="page-section-title">备注</view>
+    <view class="textarea-wrp">
+      <textarea bindinput='noteInput' style="height: 3em" />
+    </view>
+  </view>
+  <view class='footer'>
+    <view class='footer-item'>
+      <button type='warn' data-spend-type='1' bindtap='addRecord'>支出</button>
+    </view>
+    <view class='footer-item'>
+      <button type='primary' data-spend-Type='2' bindtap='addRecord'>收入</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,48 @@
+<view class='container'>
+  <view class='top'>
+    <view class='date'>
+      <view class='font12'>
+        {{yearName}}
+      </view>
+      <picker mode="multiSelector" value='{{}}' start="2018-01-01" end="2020-12-31">
+        <view class="font16">
+          {{monthName}}
+        </view>
+      </picker>
+    </view>
+    <view class='income'>
+      <view class='font12'>收入</view>
+      <view class='font16'>{{income}}</view>
+    </view>
+    <view class='payout'>
+      <view class='font12'>支出</view>
+      <view class='font16'>{{payout}}</view>
+    </view>
+  </view>
+
+  <view class='view-body'>
+    <view class='detail-list' wx:for="{{detailList}}" wx:key="item">
+      <view class='detail-title'>
+        <view class='detail-date font12'>
+          {{item.day}} {{item.week}}
+        </view>
+        <view class='detail-amount font12'>
+          收入: {{item.income}} 支出: {{item.payout}}
+        </view>
+      </view>
+      <view class='detail' wx:for="{{item.spendList}}" wx:key="item">
+        <view class='icon-image'>
+          <view style='width:30px;height:30px;border-radius:15px;background-color:#eee;text-align:center;vertical-align: middle'>
+            <image class='image' src='{{item.imagePath}}'></image>
+          </view>
+        </view>
+        <view class='note'>
+          <view class='font16' style='overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{item.note}}</view>
+        </view>
+        <view class='amount'>
+          <view class='font16'>{{item.amount}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+{
+  "pages":[
+    "pages/detail/detail",
+    "pages/add/add",
+    "pages/statistics/statistics",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#f6d526",
+    "navigationBarTitleText": "奶牛记账",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/detail/detail",
+      "text": "明细",
+      "iconPath": "images/icon/yi_ban.png",
+      "selectedIconPath": "images/icon/yi_ban.png"
+    },{
+      "pagePath": "pages/add/add",
+      "text": "记账",
+      "iconPath": "images/icon/tian_jia.png",
+      "selectedIconPath": "images/icon/tian_jia.png"
+    },{
+      "pagePath": "pages/statistics/statistics",
+      "text": "图表",
+      "iconPath": "images/icon/li_cai.png",
+      "selectedIconPath": "images/icon/li_cai.png"
+    }]
+  }
+}
