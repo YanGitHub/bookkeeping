@@ -1,2 +1,20 @@
-<!--pages/statistics/statistics.wxml-->
-<text>pages/statistics/statistics.wxml</text>
+<view class="swiper-tab">
+  <view class="swiper-tab-list {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">周</view>
+  <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">月</view>
+  <view class="swiper-tab-list {{currentTab==2 ? 'on' : ''}}" data-current="2" bindtap="swichNav">年</view>
+</view>
+
+<swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">
+  <swiper-item>
+    <view class='line-view'>
+      <canvas canvas-id="lineCanvas" disable-scroll="true" style='width:100%;height:250px' bindtouchstart="touchHandler"></canvas>
+      <button type="primary" bindtap="updateData">更新数据</button>
+    </view>
+  </swiper-item>
+  <swiper-item>
+    <view>月</view>
+  </swiper-item>
+  <swiper-item>
+    <view>年</view>
+  </swiper-item>
+</swiper>

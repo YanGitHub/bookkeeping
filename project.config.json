@@ -41,6 +41,12 @@
 					"pathName": "pages/add/add",
 					"query": "",
 					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "statistic",
+					"pathName": "pages/statistics/statistics",
+					"query": ""
 				}
 			]
 		}

@@ -1,66 +1,124 @@
-// pages/statistics/statistics.js
+var wxCharts = require('../../utils/wxcharts.js');
+var lineChart = null;
+var app = getApp();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    /** 
+        * 页面配置 
+        */
+    winWidth: 0,
+    winHeight: 0,
+    // tab切换  
+    currentTab: 0,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
+  touchHandler: function (e) {
+    console.log(lineChart.getCurrentDataIndex(e));
+    lineChart.showToolTip(e, {
+      // background: '#7cb5ec',
+      format: function (item, category) {
+        return category + ' ' + item.name + ':' + item.data
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  createSimulationData: function () {
+    var categories = [];
+    var data = [];
+    for (var i = 0; i < 10; i++) {
+      categories.push('2018-' + (i + 1));
+      data.push(Math.random() * (20 - 10) + 10);
+    }
+    // data[4] = null;
+    return {
+      categories: categories,
+      data: data
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  updateData: function () {
+    var simulationData = this.createSimulationData();
+    var series = [{
+      name: '收入',
+      data: simulationData.data,
+      format: function (val, name) {
+        return val.toFixed(2) + '元';
+      }
+    }];
+    lineChart.updateData({
+      categories: simulationData.categories,
+      series: series
+    });
   },
+  onLoad: function () {
+    var that = this;
+    /** 
+     * 获取系统信息 
+     */
+    wx.getSystemInfo({
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+      success: function (res) {
+        that.setData({
+          winWidth: res.windowWidth,
+          winHeight: res.windowHeight
+        });
+      }
+    });
+
+    /*图表 */
+
+    var simulationData = this.createSimulationData();
+    lineChart = new wxCharts({
+      canvasId: 'lineCanvas',
+      type: 'line',
+      categories: simulationData.categories,
+      animation: true,
+      // background: '#f5f5f5',
+      series: [{
+        name: '收入',
+        data: simulationData.data,
+        format: function (val, name) {
+          return val.toFixed(2) + '元';
+        }
+      }],
+      xAxis: {
+        disableGrid: true
+      },
+      yAxis: {
+        title: '收入/支出(元)',
+        format: function (val) {
+          return val.toFixed(2);
+        },
+        min: 0
+      },
+      width: that.data.winWidth,
+      height: 200,
+      dataLabel: false,
+      dataPointShape: true,
+      extra: {
+        lineStyle: 'curve'
+      }
+    });
   },
+  /** 
+     * 滑动切换tab 
+     */
+  bindChange: function (e) {
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
+    var that = this;
+    that.setData({ currentTab: e.detail.current });
+
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
+  /** 
+   * 点击tab切换 
    */
-  onPullDownRefresh: function () {
-  
-  },
+  swichNav: function (e) {
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
+    var that = this;
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    if (this.data.currentTab === e.target.dataset.current) {
+      return false;
+    } else {
+      that.setData({
+        currentTab: e.target.dataset.current
+      })
+    }
   }
-})
+});
